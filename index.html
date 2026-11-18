@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Modelo tentativo del evento de FERAL: CICFA hostea un drop sobre cybercrime y arte, con una conversación anonimizada detrás de una cortina.">
+<title>El drop de CICFA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: grilla suiza de 12 columnas. Etiqueta a la izquierda (3), contenido a la derecha (9), alineado a bandera. Un solo acento rojo. */
+:root {
+  --paper: #ffffff;
+  --ink: #111111;
+  --mute: #6f6f6c;
+  --rule: #dcdcd8;
+  --tint: #f3f3f0;
+  --red: #e1261c;
+  --display: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --text: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e0e0e; --ink: #f1f1ee; --mute: #9a9a95; --rule: #2c2c2a; --tint: #181817; --red: #ff4b3e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e0e0e; --ink: #f1f1ee; --mute: #9a9a95; --rule: #2c2c2a; --tint: #181817; --red: #ff4b3e;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 40px 96px; }
+
+.meta {
+  display: flex; flex-wrap: wrap; gap: 8px 32px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .02em;
+  color: var(--mute);
+  border-top: 2px solid var(--ink);
+  padding-top: 12px;
+}
+.meta b { color: var(--ink); font-weight: 500; }
+
+.hero { padding-block: 72px 56px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.hero h1 {
+  grid-column: 1 / -1;
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(48px, 10vw, 128px);
+  line-height: .9; letter-spacing: -.045em;
+  margin: 0;
+}
+.hero h1 span { color: var(--red); }
+.hero .lede {
+  grid-column: 4 / span 7;
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 28px); line-height: 1.25; letter-spacing: -.015em;
+  margin: 24px 0 0; text-wrap: balance;
+}
+.hero .flag {
+  grid-column: 4 / span 7;
+  font-family: var(--mono); font-size: 12px; color: var(--mute);
+  display: flex; gap: 10px; align-items: baseline; margin: 0;
+}
+.hero .flag i { width: 8px; height: 8px; background: var(--red); display: inline-block; flex: none; transform: translateY(-1px); }
+
+section {
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px;
+  border-top: 1px solid var(--rule);
+  padding-block: 36px 44px;
+}
+section > h2 {
+  grid-column: 1 / span 3;
+  margin: 0;
+  font-family: var(--mono); font-weight: 500; font-size: 12px;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--mute);
+}
+section > h2 em { font-style: normal; color: var(--red); margin-right: 10px; }
+.body { grid-column: 4 / -1; min-width: 0; display: grid; gap: 20px; }
+.body > p { margin: 0; max-width: 65ch; }
+.big {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(24px, 3.2vw, 38px); line-height: 1.12; letter-spacing: -.025em;
+  margin: 0; max-width: 22ch; text-wrap: balance;
+}
+.who { color: var(--mute); font-size: 13px; }
+
+/* Roles */
+.roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-left: 1px solid var(--rule); }
+.role { border-right: 1px solid var(--rule); padding: 4px 16px 8px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.role .verb { font-family: var(--mono); font-size: 12px; color: var(--red); letter-spacing: .04em; text-transform: uppercase; }
+.role .name { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -.02em; line-height: 1.1; }
+.role p { margin: 0; font-size: 14px; color: var(--mute); }
+
+/* Secuencia */
+.seq { list-style: none; margin: 0; padding: 0; display: grid; }
+.seq li {
+  display: grid; grid-template-columns: 56px minmax(0, 1fr) 140px; gap: 16px;
+  border-bottom: 1px solid var(--rule); padding-block: 18px;
+  align-items: baseline;
+}
+.seq li:first-child { border-top: 1px solid var(--ink); }
+.seq .n { font-family: var(--mono); font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.seq .core .n { color: var(--red); }
+.seq h3 { margin: 0 0 4px; font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -.015em; }
+.seq p { margin: 0; font-size: 15px; max-width: 60ch; }
+.seq .t { font-family: var(--mono); font-size: 12px; color: var(--mute); text-align: right; }
+
+/* Diagrama */
+.figure { overflow-x: auto; border: 1px solid var(--rule); background: var(--tint); }
+.figure svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.figure svg text { font-family: var(--mono); font-size: 11px; fill: var(--mute); letter-spacing: .04em; }
+.figure svg .lbl { fill: var(--ink); }
+.figure svg .acc { fill: var(--red); }
+.caption { font-family: var(--mono); font-size: 12px; color: var(--mute); margin: 0; }
+
+/* Tags */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tags li { font-family: var(--mono); font-size: 13px; border: 1px solid var(--ink); padding: 4px 10px; }
+.tags li.d { border-color: var(--rule); color: var(--mute); }
+
+/* Dos columnas */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.opt { border-top: 2px solid var(--ink); padding-top: 12px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.opt h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -.02em; }
+.opt p { margin: 0; font-size: 15px; }
+.opt .k { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+
+/* Listas sobrias */
+.plain { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 65ch; }
+.plain li { padding-left: 20px; position: relative; }
+.plain li::before { content: ""; position: absolute; left: 0; top: .72em; width: 8px; height: 1px; background: var(--ink); }
+
+/* Abierto */
+.qs { display: grid; margin: 0; padding: 0; list-style: none; }
+.qs li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; border-bottom: 1px solid var(--rule); padding-block: 14px; }
+.qs .n { font-family: var(--mono); font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.qs p { margin: 0; max-width: 65ch; }
+
+.limit { border: 2px solid var(--red); padding: 20px 24px; display: grid; gap: 10px; }
+.limit code { font-family: var(--mono); font-size: 13px; color: var(--red); overflow-wrap: anywhere; }
+.limit p { margin: 0; max-width: 65ch; }
+
+footer { border-top: 2px solid var(--ink); margin-top: 8px; padding-top: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-family: var(--mono); font-size: 12px; color: var(--mute); }
+
+@media (max-width: 760px) {
+  .hero { padding-block: 48px 40px; }
+  .hero .lede, .hero .flag { grid-column: 1 / -1; }
+  section > h2, .body { grid-column: 1 / -1; }
+  .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); border-left: 0; gap: 24px 0; }
+  .role { border-right: 0; border-top: 1px solid var(--rule); padding: 12px 12px 0 0; }
+  .two { grid-template-columns: 1fr; }
+  .seq li { grid-template-columns: 40px minmax(0, 1fr); }
+  .seq .t { grid-column: 2; text-align: left; }
+  .qs li { grid-template-columns: 40px minmax(0, 1fr); }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; }
+.listen { grid-column: 4 / span 7; display: grid; gap: 8px; margin-top: 8px; }
+.listen span { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.listen audio { width: 100%; max-width: 520px; }
+@media (max-width: 760px) { .listen { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="meta">
+    <span><b>FERAL</b> · CYCLE01</span>
+    <span>Modelo de evento · borrador</span>
+    <span>Fuente: call Boris × mnrr, 13.11.2026</span>
+    <span>Versión 17.11.2026</span>
+  </div>
+
+  <header class="hero">
+    <h1>CICFA<br>presents<span>.</span></h1>
+    <p class="lede">Un drop de arte sobre cybercrime, y adentro, una conversación anonimizada entre Remilia y Third World Elite. Feral arma el marco y mueve todo desde atrás.</p>
+    <p class="flag"><i></i>Nada de esto está decidido. Es lo que salió de una charla entre dos personas.</p>
+    <div class="listen">
+      <span>Escuchar · 2 min</span>
+      <audio controls preload="metadata" src="audio.m4a">Tu navegador no reproduce audio. <a href="audio.m4a">Bajá el archivo</a>.</audio>
+    </div>
+  </header>
+
+  <section>
+    <h2><em>A</em>Tesis</h2>
+    <div class="body">
+      <p class="big">Si es solo para juntarse, no hace falta un evento. Tiene que bajar algo, y ese algo tiene que tener eco.</p>
+      <p>Feral funciona como el hashtag que une los círculos de un diagrama de Venn: lo que comparten varios micronichos sin que ninguno lo represente del todo. El ángulo que nadie está trabajando es el cruce de <strong>cybercrime y arte</strong>. La academia está descubriendo a Palantir; Remilia pasó cerca de lo edgy, pero nunca por ahí.</p>
+      <p class="who">Boris · 0:00 – 6:18</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>B</em>Quién hace qué</h2>
+    <div class="body">
+      <div class="roles">
+        <div class="role">
+          <span class="verb">Hostea</span>
+          <span class="name">CICFA</span>
+          <p>Presenta el drop e invita a las dos comunidades. Es la cara visible.</p>
+        </div>
+        <div class="role">
+          <span class="verb">Moviliza</span>
+          <span class="name">Feral</span>
+          <p>Arma el marco, plantea el tema y opera la difusión. Puede aparecer o no.</p>
+        </div>
+        <div class="role">
+          <span class="verb">Conversan</span>
+          <span class="name">Remilia × Third World Elite</span>
+          <p>Firman la conversación. Nadie se identifica.</p>
+        </div>
+        <div class="role">
+          <span class="verb">Producen</span>
+          <span class="name">Fanny · Nico</span>
+          <p>Fanny busca lugar y podría llevar la producción. Nico hizo gran parte de la pieza.</p>
+        </div>
+      </div>
+      <p>No se presenta como un collab con Remilia. Lo propio es un drop de arte contemporáneo con vida propia, y en ese marco se abre una mesa para que dos comunidades hablen de cybercrime.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>C</em>Secuencia</h2>
+    <div class="body">
+      <ol class="seq">
+        <li>
+          <span class="n">00</span>
+          <div><h3>Previa</h3><p>Los amplificadores ya saben qué viene. El evento existe online antes de existir en la sala.</p></div>
+          <span class="t">días antes</span>
+        </li>
+        <li class="core">
+          <span class="n">01</span>
+          <div><h3>El drop</h3><p>CICFA presenta. Un momento pasivo, con horario: la sala se calla y mira. Puede ser un video hecho por Feral, un dashboard en vivo, una perf o un <em>bounty</em>. Algo que se larga y queda andando.</p></div>
+          <span class="t">3 a 20 min</span>
+        </li>
+        <li>
+          <span class="n">02</span>
+          <div><h3>Corte</h3><p>Se ve el instrumento y en qué termina el drop. Corta.</p></div>
+          <span class="t">—</span>
+        </li>
+        <li class="core">
+          <span class="n">03</span>
+          <div><h3>La conversación</h3><p>Detrás de la cortina, sobre el marco teórico de lo que el drop está haciendo. Debate moderado o lectura de ponencias.</p></div>
+          <span class="t">15 a 20 min por voz</span>
+        </li>
+        <li>
+          <span class="n">04</span>
+          <div><h3>Eco</h3><p>Lo que pasó en la sala se repite y se recorta online. Es para lo que se hace el evento.</p></div>
+          <span class="t">días después</span>
+        </li>
+      </ol>
+      <p class="who">Duraciones dichas en la call; el total no está definido. Secuencia: mnrr, 31:11 – 32:40, con acuerdo de Boris.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>D</em>El dispositivo</h2>
+    <div class="body">
+      <p class="big">Cortina, no máscara.</p>
+      <p>La cortina es membrana y medio a la vez. De frente recibe la proyección del drop; detrás, las voces hablan y solo se ven siluetas. Tapa más que una máscara, detrás de la cual igual se ve el cuerpo, y evita el gesto de copiar la estética de la guerrilla.</p>
+      <div class="figure" role="img" aria-label="Corte lateral de la sala: el público a la izquierda, un proyector que pega sobre la cortina, y detrás de la cortina una mesa con las voces en silueta y una luz trasera.">
+        <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- piso -->
+          <line x1="20" y1="230" x2="780" y2="230" stroke="currentColor" style="color: var(--ink)" stroke-width="1.5"/>
+          <!-- publico -->
+          <g fill="currentColor" style="color: var(--mute)">
+            <circle cx="60" cy="196" r="8"/><rect x="52" y="206" width="16" height="24" fill="currentColor"/>
+            <circle cx="100" cy="196" r="8"/><rect x="92" y="206" width="16" height="24" fill="currentColor"/>
+            <circle cx="140" cy="196" r="8"/><rect x="132" y="206" width="16" height="24" fill="currentColor"/>
+            <circle cx="180" cy="196" r="8"/><rect x="172" y="206" width="16" height="24" fill="currentColor"/>
+          </g>
+          <text x="60" y="256">PÚBLICO · HASTA 100</text>
+          <!-- proyector -->
+          <rect x="220" y="88" width="30" height="16" fill="currentColor" style="color: var(--ink)"/>
+          <polygon points="250,92 470,40 470,200 250,100" fill="currentColor" style="color: var(--red)" opacity=".14"/>
+          <text x="196" y="76">PROYECCIÓN</text>
+          <!-- cortina -->
+          <line x1="470" y1="30" x2="470" y2="230" stroke="currentColor" style="color: var(--red)" stroke-width="3"/>
+          <text class="acc" x="440" y="22">CORTINA</text>
+          <!-- mesa y voces -->
+          <g fill="currentColor" style="color: var(--ink)">
+            <rect x="540" y="176" width="150" height="6"/>
+            <rect x="556" y="182" width="4" height="48"/>
+            <rect x="670" y="182" width="4" height="48"/>
+            <circle cx="560" cy="140" r="11"/><rect x="549" y="152" width="22" height="24"/>
+            <circle cx="600" cy="140" r="11"/><rect x="589" y="152" width="22" height="24"/>
+            <circle cx="640" cy="140" r="11"/><rect x="629" y="152" width="22" height="24"/>
+            <circle cx="680" cy="140" r="11"/><rect x="669" y="152" width="22" height="24"/>
+          </g>
+          <text class="lbl" x="540" y="256">VOCES · 2 A 5 + MODERADOR</text>
+          <!-- luz trasera -->
+          <rect x="740" y="70" width="18" height="12" fill="currentColor" style="color: var(--ink)"/>
+          <polygon points="740,76 480,40 480,220" fill="currentColor" style="color: var(--ink)" opacity=".06"/>
+          <text x="706" y="62">LUZ TRASERA</text>
+        </svg>
+      </div>
+      <p class="caption">Corte lateral. Esquema, no plano de producción: falta pensarlo <i>production wise</i>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>E</em>Marco</h2>
+    <div class="body">
+      <p class="big">Una conversación sobre ciberterrorismo, arte, cultura y comunidades online.</p>
+      <p>Remilia llega a entender las comunidades como arma, pero no desarma de qué están hechas. El punto que trae Feral: <strong>comunidades armadas que mezclan personas con varias cuentas y cuentas sin un humano detrás</strong>. Enjambres que pronto nos van a superar en número. Por eso tampoco hay anonimato que cuidar: nunca hubo una subjetividad reducida a una unidad.</p>
+      <ul class="tags" aria-label="Keywords">
+        <li>#cyber-crime</li><li>#cyber-weapons</li><li>#weaponizing-communities</li><li>#psyops</li><li>#palantir-aesthetics</li><li>#intel</li><li>#net-art</li>
+        <li class="d">pseudoanonimato</li><li class="d">alt accounts</li><li class="d">profilicity</li><li class="d">comunidad como obra y como arma</li><li class="d">swarms</li>
+      </ul>
+      <p class="who">Negro: el flyer de Boris. Gris: lo que sumaron mnrr y la call. <code>#net-art</code> va a propósito, como término de los 90 usado casi con ironía.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>F</em>Formato de la conversación</h2>
+    <div class="body">
+      <div class="two">
+        <div class="opt">
+          <span class="k">Opción 1</span>
+          <h3>Debate</h3>
+          <p>Dos comunidades y un moderador. Más vivo, pero pocas personas manejan el ritmo de un debate en vivo: cuándo interrumpir, hasta dónde volver. Con micrófono y cámara pasa otra cosa.</p>
+        </div>
+        <div class="opt">
+          <span class="k">Opción 2</span>
+          <h3>Ponencias</h3>
+          <p>Como en un congreso. Cada voz lleva un texto de 2 o 3 páginas y lo lee detrás de la cortina. Lee uno, lee otro, hay un comentario. Mientras tanto se proyecta adelante o se juega con la luz atrás.</p>
+        </div>
+      </div>
+      <p>Voces posibles: mnrr o Sasha del lado de Remilia, Plenus, alguno más. Boris podría moderar. Pueden ser cinco o menos. Una pieza que se suma: un texto firmado entre todos con la hipótesis, las ciencias sociales como herramienta de <em>cyber warfare</em>, traducido en vivo.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>G</em>Difusión</h2>
+    <div class="body">
+      <p class="big">Un teatro IRL para una distribución online.</p>
+      <p>Si no, el evento afecta solo a los treinta que van. El éxito no se mide en números, pero hace falta que se sepa que alguien está ocupando el ángulo de arte y cybercrime. Hacen falta objetivos tácticos.</p>
+      <ul class="plain">
+        <li><strong>Mesa de difusión</strong> con Sasha y Aaron, con pedidos explícitos y en el grupo, cuando el concepto tenga forma.</li>
+        <li><strong>CRM de amplificadores</strong> en el repo. Si cada uno trae cinco que reposteen el día del evento, ya es mucho.</li>
+        <li><strong>Segundo nivel:</strong> cuentas de curaduría que agiten si se les da algo suculento.</li>
+        <li><strong>Remilia</strong> ya transmitió eventos en vivo en sus propias plataformas, y nunca hizo uno en Latinoamérica.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>H</em>Lugar y fecha</h2>
+    <div class="body">
+      <div class="two">
+        <div class="opt">
+          <span class="k">Lugar</span>
+          <p><strong>El CAP</strong>, que no tiene producción, o <strong>un hotel con auditorio</strong> de hasta 100 personas. Fanny está buscando. Hay que pasarle el hotel de al lado, el de la foto de Aaron.</p>
+        </div>
+        <div class="opt">
+          <span class="k">Fecha</span>
+          <p>Definirla con criterio estratégico. Ideal a fin de noviembre; puede esperar a mediados de diciembre. A la tardecita, martes o jueves (call del 9/11). Cae antes del arranque de CYCLE01.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>I</em>Abierto</h2>
+    <div class="body">
+      <ul class="qs">
+        <li><span class="n">#25</span><p>¿Feral aparece en el evento o mueve todo desde atrás?</p></li>
+        <li><span class="n">#26</span><p>¿Qué es el drop: video, dashboard en vivo, perf, <em>bounty</em> o repo?</p></li>
+        <li><span class="n">#27</span><p>¿Debate o ponencias? ¿Quién habla por Remilia y quién modera?</p></li>
+        <li><span class="n">#28</span><p>¿Se arma el CRM de amplificadores? ¿Cuáles son los objetivos tácticos?</p></li>
+        <li><span class="n">—</span><p>¿Cómo se llama? Conviven <em>Remilia Hotel</em> e <em>International Cyberweapons &amp; Art Conference</em>. Falta también la forma corta de decir «dispositivo de terrorismo cibernético-cultural».</p></li>
+      </ul>
+      <p class="who">Números de <code>context/strategy/preguntas.md</code>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><em>J</em>Límite</h2>
+    <div class="body">
+      <div class="limit">
+        <code>assert stages_symbolic_systems != real_world_harm</code>
+        <p>Una opción para el drop es un repo open source «para atacar instituciones culturales» que cualquiera puede clonar y que anda seis meses. Choca con el brief: se trabaja con la representación del arma, nunca con código dañino funcional. Hay que resolverlo antes de definir el drop (pregunta #26).</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>FERAL · built on COMANDO Canon</span>
+    <span>context/knowledge/fuentes/boris/2026-11-13-call-mnrr-evento-cicfa.md</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
